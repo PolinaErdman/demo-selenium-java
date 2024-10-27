@@ -40,4 +40,10 @@ public class LoginPage {
         WebElement inputPasswordWebElement = driver.findElement(inputPasswordBy);
         inputPasswordWebElement.sendKeys(password);
     }
+
+    public String getCredentialsErrorMessageText() {
+        By textCredentialsErrorMessageBy = By.xpath(LoginXpath.INVALID_CREDENTIALS_MESSAGE_XPATH);
+        WebElement textCredentialsErrorMessageWebElement = driver.findElement(textCredentialsErrorMessageBy);
+        return textCredentialsErrorMessageWebElement.getText();
+    }
 }
