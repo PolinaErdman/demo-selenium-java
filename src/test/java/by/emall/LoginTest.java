@@ -16,9 +16,7 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.clickButtonCookieAccept();
         loginPage.clickButtonSignIn();
-        String actual = loginPage.getErrorMessageText();
-        String expected = LoginMessage.EMPTY_PHONE_AND_PASSWORD;
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(LoginMessage.EMPTY_PHONE_AND_PASSWORD, loginPage.getErrorMessageText());
     }
 
     @Test
@@ -30,9 +28,7 @@ public class LoginTest {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPhone("331000000");
         loginPage.clickButtonSignIn();
-        String actual = loginPage.getErrorMessageText();
-        String expected = LoginMessage.EMPTY_PASSWORD;
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(LoginMessage.EMPTY_PASSWORD, loginPage.getErrorMessageText());
     }
 
     @Test
@@ -44,9 +40,7 @@ public class LoginTest {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPassword("testtest");
         loginPage.clickButtonSignIn();
-        String actual = loginPage.getErrorMessageText();
-        String expected = LoginMessage.EMPTY_PHONE;
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(LoginMessage.EMPTY_PHONE, loginPage.getErrorMessageText());
     }
 
     @Test
@@ -59,8 +53,6 @@ public class LoginTest {
         loginPage.sendKeysInputPhone("331000000");
         loginPage.sendKeysInputPassword("testtest");
         loginPage.clickButtonSignIn();
-        String actual = loginPage.getErrorMessageText();
-        String expected = LoginMessage.INVALID_CREDENTIALS;
-        Assertions.assertEquals(expected, actual);
+        Assertions.assertEquals(LoginMessage.INVALID_CREDENTIALS, loginPage.getErrorMessageText());
     }
 }
