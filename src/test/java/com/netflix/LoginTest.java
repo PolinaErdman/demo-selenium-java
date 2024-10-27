@@ -32,7 +32,7 @@ public class LoginTest {
         WebDriver driver = new ChromeDriver();
         driver.get("https://www.netflix.com/login");
         LoginPage loginPage = new LoginPage(driver);
-        loginPage.sendKeysPassword("testpassword");
+        loginPage.sendKeysInputPassword("testpassword");
         loginPage.clickButtonSignIn();
         Assertions.assertEquals(LoginMessage.INVALID_EMAIL_OR_PHONE, loginPage.getEmailOrPhoneErrorMessageText());
     }
@@ -44,7 +44,7 @@ public class LoginTest {
         driver.get("https://www.netflix.com/login");
         LoginPage loginPage = new LoginPage(driver);
         loginPage.sendKeysInputEmailOrPhone(email);
-        loginPage.sendKeysPassword("testpassword");
+        loginPage.sendKeysInputPassword("testpassword");
         loginPage.clickButtonSignIn();
         Thread.sleep(500);
         Assertions.assertEquals(String.format(LoginMessage.INVALID_CREDENTIALS, email), loginPage.getCredentialsErrorMessageText());

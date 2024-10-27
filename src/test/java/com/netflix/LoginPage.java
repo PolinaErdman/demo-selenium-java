@@ -35,7 +35,7 @@ public class LoginPage {
         inputEmailOrPhoneWebElement.sendKeys(emailOrPhone);
     }
 
-    public void sendKeysPassword(String password) {
+    public void sendKeysInputPassword(String password) {
         By inputPasswordBy = By.xpath(LoginXpath.INPUT_PASSWORD_XPATH);
         WebElement inputPasswordWebElement = driver.findElement(inputPasswordBy);
         inputPasswordWebElement.sendKeys(password);
