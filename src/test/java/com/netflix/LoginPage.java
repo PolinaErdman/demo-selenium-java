@@ -28,4 +28,16 @@ public class LoginPage {
         WebElement textPasswordErrorMessageWebElement = driver.findElement(textPasswordErrorMessageBy);
         return textPasswordErrorMessageWebElement.getText();
     }
+
+    public void sendKeysInputEmailOrPhone(String emailOrPhone) {
+        By inputEmailOrPhoneBy = By.xpath(LoginXpath.INPUT_EMAIL_OR_PHONE_XPATH);
+        WebElement inputEmailOrPhoneWebElement = driver.findElement(inputEmailOrPhoneBy);
+        inputEmailOrPhoneWebElement.sendKeys(emailOrPhone);
+    }
+
+    public void sendKeysPassword(String password) {
+        By inputPasswordBy = By.xpath(LoginXpath.INPUT_PASSWORD_XPATH);
+        WebElement inputPasswordWebElement = driver.findElement(inputPasswordBy);
+        inputPasswordWebElement.sendKeys(password);
+    }
 }
