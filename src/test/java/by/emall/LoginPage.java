@@ -34,4 +34,10 @@ public class LoginPage {
         WebElement inputPasswordWebElement = driver.findElement(inputPasswordBy);
         inputPasswordWebElement.sendKeys(password);
     }
+
+    public void clickButtonCookieAccept() {
+        By buttonCookieAcceptBy = By.xpath(LoginXpath.COOKIE_ACCEPT_XPATH);
+        WebElement buttonCookieAcceptWebElement = driver.findElement(buttonCookieAcceptBy);
+        buttonCookieAcceptWebElement.click();
+    }
 }
