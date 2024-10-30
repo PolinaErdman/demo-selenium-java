@@ -1,9 +1,9 @@
 package by.emall;
 
 public class LoginXpath {
-    public static final String INPUT_PHONE_XPATH = "/html/body/div[1]/div/div/div[1]/form/div[1]/input";
-    public static final String INPUT_PASSWORD_XPATH = "/html/body/div[1]/div/div/div[1]/form/div[2]/input";
-    public static final String BUTTON_SIGN_IN_XPATH = "/html/body/div[1]/div/div/div[1]/form/button";
-    public static final String ERROR_MESSAGE_XPATH = "/html/body/div[1]/div/div/div[1]/form/div[3]";
-    public static final String COOKIE_ACCEPT_XPATH = "/html/body/div[5]/div/div[2]/div/div[3]/button[2]";
+    public static final String INPUT_PHONE_LOCATOR = "//input[@id='tel']";
+    public static final String INPUT_PASSWORD_LOCATOR = "//input[@id='current-password']";
+    public static final String BUTTON_SIGN_IN_LOCATOR = "//button[@type='submit']";
+    public static final String ERROR_MESSAGE_LOCATOR = "//div[@class='password_error_message__KRNDP']";
+    public static final String COOKIE_ACCEPT_LOCATOR = "/html/body/div[5]/div/div[2]/div/div[3]/button[2]";
 }
