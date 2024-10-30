@@ -3,6 +3,10 @@ package by.emall;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.time.Duration;
 
 public class LoginPage {
     private WebDriver driver;
@@ -19,6 +23,8 @@ public class LoginPage {
 
     public String getErrorMessageText() {
         By textErrorMessageBy = By.xpath(LoginXpath.ERROR_MESSAGE_LOCATOR);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(textErrorMessageBy));
         WebElement textErrorMessageWebElement = driver.findElement(textErrorMessageBy);
         return textErrorMessageWebElement.getText();
     }
@@ -37,6 +43,8 @@ public class LoginPage {
 
     public void clickButtonCookieAccept() {
         By buttonCookieAcceptBy = By.xpath(LoginXpath.COOKIE_ACCEPT_LOCATOR);
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(4));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(buttonCookieAcceptBy));
         WebElement buttonCookieAcceptWebElement = driver.findElement(buttonCookieAcceptBy);
         buttonCookieAcceptWebElement.click();
     }

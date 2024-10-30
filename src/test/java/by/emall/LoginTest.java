@@ -7,8 +7,6 @@ import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
-import java.time.Duration;
-
 public class LoginTest {
     WebDriver driver;
     LoginPage loginPage;
@@ -16,7 +14,6 @@ public class LoginTest {
     @BeforeEach
     public void setUp() {
         driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
         driver.get("https://emall.by/login/password");
         loginPage = new LoginPage(driver);
     }
