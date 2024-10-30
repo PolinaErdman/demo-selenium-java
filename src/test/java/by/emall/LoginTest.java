@@ -16,7 +16,7 @@ public class LoginTest {
         LoginPage loginPage = new LoginPage(driver);
         loginPage.clickButtonCookieAccept();
         loginPage.clickButtonSignIn();
-        Assertions.assertEquals(LoginMessage.EMPTY_PHONE_AND_PASSWORD, loginPage.getErrorMessageText());
+        Assertions.assertEquals(LoginMessage.THE_PHONE_NUMBER_FIELD_IS_REQUIRED_THE_PASSWORD_FIELD_IS_REQUIRED, loginPage.getErrorMessageText());
     }
 
     @Test
@@ -28,7 +28,7 @@ public class LoginTest {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPhone("331000000");
         loginPage.clickButtonSignIn();
-        Assertions.assertEquals(LoginMessage.EMPTY_PASSWORD, loginPage.getErrorMessageText());
+        Assertions.assertEquals(LoginMessage.THE_PASSWORD_FIELD_IS_REQUIRED, loginPage.getErrorMessageText());
     }
 
     @Test
@@ -40,7 +40,7 @@ public class LoginTest {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPassword("testtest");
         loginPage.clickButtonSignIn();
-        Assertions.assertEquals(LoginMessage.EMPTY_PHONE, loginPage.getErrorMessageText());
+        Assertions.assertEquals(LoginMessage.THE_PHONE_NUMBER_FIELD_IS_REQUIRED, loginPage.getErrorMessageText());
     }
 
     @Test
@@ -53,6 +53,6 @@ public class LoginTest {
         loginPage.sendKeysInputPhone("331000000");
         loginPage.sendKeysInputPassword("testtest");
         loginPage.clickButtonSignIn();
-        Assertions.assertEquals(LoginMessage.INVALID_CREDENTIALS, loginPage.getErrorMessageText());
+        Assertions.assertEquals(LoginMessage.INVALID_LOGIN_OR_PASSWORD, loginPage.getErrorMessageText());
     }
 }
