@@ -1,30 +1,35 @@
 package by.emall;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
-import java.util.concurrent.TimeUnit;
+
+import java.time.Duration;
 
 public class LoginTest {
+    WebDriver driver;
+    LoginPage loginPage;
+
+    @BeforeEach
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
+        driver.get("https://emall.by/login/password");
+        loginPage = new LoginPage(driver);
+    }
 
     @Test
-    public void testEmptyPhoneAndPassword() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://emall.by/login/password");
-        LoginPage loginPage = new LoginPage(driver);
+    public void testEmptyPhoneAndPassword() {
         loginPage.clickButtonCookieAccept();
         loginPage.clickButtonSignIn();
         Assertions.assertEquals(LoginMessage.THE_PHONE_NUMBER_FIELD_IS_REQUIRED_THE_PASSWORD_FIELD_IS_REQUIRED, loginPage.getErrorMessageText());
     }
 
     @Test
-    public void testEmptyPassword() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://emall.by/login/password");
-        LoginPage loginPage = new LoginPage(driver);
+    public void testEmptyPassword() {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPhone("331000000");
         loginPage.clickButtonSignIn();
@@ -32,11 +37,7 @@ public class LoginTest {
     }
 
     @Test
-    public void testEmptyPhone() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://emall.by/login/password");
-        LoginPage loginPage = new LoginPage(driver);
+    public void testEmptyPhone() {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPassword("testtest");
         loginPage.clickButtonSignIn();
@@ -44,15 +45,16 @@ public class LoginTest {
     }
 
     @Test
-    public void testInvalidCredentials() throws InterruptedException {
-        WebDriver driver = new ChromeDriver();
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        driver.get("https://emall.by/login/password");
-        LoginPage loginPage = new LoginPage(driver);
+    public void testInvalidCredentials() {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPhone("331000000");
         loginPage.sendKeysInputPassword("testtest");
         loginPage.clickButtonSignIn();
         Assertions.assertEquals(LoginMessage.INVALID_LOGIN_OR_PASSWORD, loginPage.getErrorMessageText());
+    }
+
+    @AfterEach
+    void tearDown() {
+        driver.quit();
     }
 }
