@@ -1,52 +1,57 @@
 package com.netflix;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import java.time.Duration;
 
 public class LoginTest {
+    WebDriver driver;
+    LoginPage loginPage;
 
-    @Test
-    public void test1() {
-        WebDriver driver = new ChromeDriver();
+    @BeforeEach
+    public void setUp() {
+        driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(4));
         driver.get("https://www.netflix.com/login");
-        LoginPage loginPage = new LoginPage(driver);
-        loginPage.clickButtonSignIn();
-        Assertions.assertEquals(LoginMessage.INVALID_EMAIL_OR_PHONE, loginPage.getEmailOrPhoneErrorMessageText());
-        Assertions.assertEquals(LoginMessage.INVALID_PASSWORD, loginPage.getPasswordErrorMessageText());
+        loginPage = new LoginPage(driver);
     }
 
     @Test
-    public void test2() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.netflix.com/login");
-        LoginPage loginPage = new LoginPage(driver);
+    public void testEmptyCredentials() {
+        loginPage.clickButtonSignIn();
+        Assertions.assertEquals(LoginMessage.PROVIDE_VALID_EMAIL_ADDRESS_OR_PHONE_NUMBER, loginPage.getEmailOrPhoneErrorMessageText());
+        Assertions.assertEquals(LoginMessage.PASSWORD_MUST_CONTAIN_FROM_4_TO_60_CHARACTERS, loginPage.getPasswordErrorMessageText());
+    }
+
+    @Test
+    public void testEmptyPassword() {
         loginPage.sendKeysInputEmailOrPhone("test@test.com");
         loginPage.clickButtonSignIn();
-        Assertions.assertEquals(LoginMessage.INVALID_PASSWORD, loginPage.getPasswordErrorMessageText());
+        Assertions.assertEquals(LoginMessage.PASSWORD_MUST_CONTAIN_FROM_4_TO_60_CHARACTERS, loginPage.getPasswordErrorMessageText());
     }
 
     @Test
-    public void test3() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.netflix.com/login");
-        LoginPage loginPage = new LoginPage(driver);
+    public void testEmptyEmailOrPhone() {
         loginPage.sendKeysInputPassword("testpassword");
         loginPage.clickButtonSignIn();
-        Assertions.assertEquals(LoginMessage.INVALID_EMAIL_OR_PHONE, loginPage.getEmailOrPhoneErrorMessageText());
+        Assertions.assertEquals(LoginMessage.PROVIDE_VALID_EMAIL_ADDRESS_OR_PHONE_NUMBER, loginPage.getEmailOrPhoneErrorMessageText());
     }
 
     @Test
-    public void test4() throws InterruptedException {
+    public void testInvalidCredentials() {
         String email = "test@test.com";
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://www.netflix.com/login");
-        LoginPage loginPage = new LoginPage(driver);
         loginPage.sendKeysInputEmailOrPhone(email);
         loginPage.sendKeysInputPassword("testpassword");
         loginPage.clickButtonSignIn();
-        Thread.sleep(500);
-        Assertions.assertEquals(String.format(LoginMessage.INVALID_CREDENTIALS, email), loginPage.getCredentialsErrorMessageText());
+        Assertions.assertEquals(String.format(LoginMessage.INVALID_PASSWORD_FOR_EMAIL_OR_PHONE, email), loginPage.getCredentialsErrorMessageText());
+    }
+
+    @AfterEach
+    void tearDown() {
+        driver.quit();
     }
 }
