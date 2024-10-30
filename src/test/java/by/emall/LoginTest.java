@@ -1,9 +1,6 @@
 package by.emall;
 
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 
@@ -19,6 +16,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Empty phone and password error")
     public void testEmptyPhoneAndPassword() {
         loginPage.clickButtonCookieAccept();
         loginPage.clickButtonSignIn();
@@ -26,6 +24,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Empty password error")
     public void testEmptyPassword() {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPhone("331000000");
@@ -34,6 +33,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Empty phone error")
     public void testEmptyPhone() {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPassword("testtest");
@@ -42,6 +42,7 @@ public class LoginTest {
     }
 
     @Test
+    @DisplayName("Invalid phone and password error")
     public void testInvalidCredentials() {
         loginPage.clickButtonCookieAccept();
         loginPage.sendKeysInputPhone("331000000");
