@@ -1,73 +1,53 @@
 package gov.login.secure;
 
+import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
 public class LoginTest {
-    @Test
-    public void test1() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://secure.login.gov/");
+    WebDriver driver;
+    LoginPage loginPage;
 
-        String buttonSignInXpath = "/html/body/main/div/form/lg-submit-button/button";
-        By buttonSignInBy = By.xpath(buttonSignInXpath);
-        WebElement buttonSignInWebElement = driver.findElement(buttonSignInBy);
-        buttonSignInWebElement.click();
+    @BeforeEach
+    void setUp() {
+        driver = new ChromeDriver();
+        driver.get("https://secure.login.gov/");
+        loginPage = new LoginPage(driver);
     }
 
     @Test
-    public void test2() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://secure.login.gov/");
-
-        String inputEmailXpath = "/html/body/main/div/form/lg-validated-field/div/input";
-        By inputEmailBy = By.xpath(inputEmailXpath);
-        WebElement inputEmailWebElement = driver.findElement(inputEmailBy);
-        inputEmailWebElement.sendKeys("testA@test.com");
-
-        String buttonSignInXpath = "/html/body/main/div/form/lg-submit-button/button";
-        By buttonSignInBy = By.xpath(buttonSignInXpath);
-        WebElement buttonSignInWebElement = driver.findElement(buttonSignInBy);
-        buttonSignInWebElement.click();
+    public void testEmptyField() {
+        loginPage.clickButtonSignIn();
+        Assertions.assertEquals(LoginMessage.EMPTY_FIELD, loginPage.getEmptyFieldMessageText());
     }
 
     @Test
-    public void test3() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://secure.login.gov/");
-
-        String inputPasswordXpath = "/html/body/main/div/form/lg-password-toggle/lg-validated-field/div/input";
-        By inputPasswordBy = By.xpath(inputPasswordXpath);
-        WebElement inputPasswordWebElement = driver.findElement(inputPasswordBy);
-        inputPasswordWebElement.sendKeys("1q2w#E4r");
-
-        String buttonSignInXpath = "/html/body/main/div/form/lg-submit-button/button";
-        By buttonSignInBy = By.xpath(buttonSignInXpath);
-        WebElement buttonSignInWebElement = driver.findElement(buttonSignInBy);
-        buttonSignInWebElement.click();
+    public void testEmptyPassword() {
+        loginPage.sendKeysInputEmail("testA@test.com");
+        loginPage.clickButtonSignIn();
+        Assertions.assertEquals(LoginMessage.EMPTY_FIELD, loginPage.getEmptyFieldMessageText());
     }
 
     @Test
-    public void test4() {
-        WebDriver driver = new ChromeDriver();
-        driver.get("https://secure.login.gov/");
+    public void testEmptyEmail() {
+        loginPage.sendKeysInputPassword("testPassword");
+        loginPage.clickButtonSignIn();
+        Assertions.assertEquals(LoginMessage.EMPTY_FIELD, loginPage.getEmptyFieldMessageText());
+    }
 
-        String inputEmailXpath = "/html/body/main/div/form/lg-validated-field/div/input";
-        By inputEmailBy = By.xpath(inputEmailXpath);
-        WebElement inputEmailWebElement = driver.findElement(inputEmailBy);
-        inputEmailWebElement.sendKeys("testB@test.com");
+    @Test
+    public void testInvalidCredentials() {
+        loginPage.sendKeysInputEmail("testA@test.com");
+        loginPage.sendKeysInputPassword("testPassword");
+        loginPage.clickButtonSignIn();
+        Assertions.assertEquals(LoginMessage.INVALID_CREDENTIALS, loginPage.getInvalidCredentialsMessageText());
+    }
 
-        String inputPasswordXpath = "/html/body/main/div/form/lg-password-toggle/lg-validated-field/div/input";
-        By inputPasswordBy = By.xpath(inputPasswordXpath);
-        WebElement inputPasswordWebElement = driver.findElement(inputPasswordBy);
-        inputPasswordWebElement.sendKeys("a1S@d3F$");
-
-        String buttonSignInXpath = "/html/body/main/div/form/lg-submit-button/button";
-        By buttonSignInBy = By.xpath(buttonSignInXpath);
-        WebElement buttonSignInWebElement = driver.findElement(buttonSignInBy);
-        buttonSignInWebElement.click();
+    @AfterEach
+    void tearDown() {
+        driver.quit();
     }
 }
